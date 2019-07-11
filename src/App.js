@@ -1,0 +1,86 @@
+import React from 'react';
+import Header from './Component/Header/Header';
+import LiveMatches from './Component/LiveMatches/LiveMatches';
+import UpcomingMatches from './Component/UpcomingMatches/UpcomingMatches';
+import OldMatches from './Component/OldMatches/OldMatches';
+import {BrowserRouter, Route,Link, withRouter} from 'react-router-dom';
+import './App.css';
+import axios from 'axios';
+
+class App extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			apiCall : {
+				isSuccess: false,
+				data: [],
+				faliureMessage: ''
+			}
+		}
+	}
+	componentDidMount =() =>{
+		var self = this;
+        axios({
+            url: "https://dev132-cricket-live-scores-v1.p.rapidapi.com/matches.php?completedlimit=5&inprogresslimit=5&upcomingLimit=5",
+            method: 'get',
+            headers: {
+                "X-RapidAPI-Host" : "dev132-cricket-live-scores-v1.p.rapidapi.com"
+                ,"X-RapidAPI-Key" : "6e9b6a0a65msh6bd761160573386p1ba0d1jsn67e1f7c9715e"
+            }
+        }).then(function (response) {
+            self.setState({
+                apiCall : {
+                	isSuccess: true,
+                	data : response.data.matchList.matches,
+                	faliureMessage: 'Loading'
+                }
+            })
+            console.log(self.state.apiCall);
+        }).catch(function(response){
+        	self.setState({
+                apiCall : {
+                	isSuccess: false,
+                	data : '',
+                	faliureMessage: 'There Some Connectivity Problem Please check your internet connection'
+                }
+            })
+        	console.log(response.data);
+        })
+    }
+	render(){
+  		return (
+    		<BrowserRouter>
+      			<div className="App">
+        			<Header />
+                    <div className="page-start">
+            			{ !this.state.apiCall.isSuccess && <Route path='/' exact render = {()=> <div>{this.state.apiCall.faliureMessage}</div>} />}
+            			{ this.state.apiCall.isSuccess && 
+                            <Route path='/' exact render = {() => 
+                                {this.state.apiCall.data.map((e,i) =>{
+                                    return (
+                                            <div key={e.id} className="EachBox" >
+                                                <div className="MainHeading">
+                                                    {e.series.name}
+                                                </div>
+                                                <div className="TeamName">
+                                                    {e.awayTeam.shortName+' Vs '+e.homeTeam.shortName}
+                                                </div>
+                                                {e.matchSummaryText}
+                                            </div>
+                                        )
+                                    })
+                                }
+
+                            }/>
+                        }
+            			<Route path='/live' exact render = {() => <LiveMatches AllMatch = {this.state.apiCall} />}/>
+            			<Route path='/Upcoming' exact render ={()=> <UpcomingMatches AllMatch = {this.state.apiCall} />} />
+                        <Route path='/old' exact render = {()=> <OldMatches AllMatch = {this.state.apiCall} />} />
+                    </div>
+      			</div>
+    		</BrowserRouter>
+  		);
+  	}
+}
+
+export default App;

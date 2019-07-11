@@ -1,0 +1,77 @@
+.Box{
+	width: 800px;
+    margin: 0 auto;
+    height: 100%;
+}
+.Box .EachBox{
+    border-top: 1px solid #012;
+    border-right: 1px solid #012;
+    padding: 20px 40px;
+    border-left: 1px solid #012;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+.Box .EachBox:nth-child(odd){
+    background:#ccc;
+}
+.Box .EachBox:last-child{
+	border-bottom: 1px solid #012;
+}
+.Box .EachBox .MainHeading{
+	font-size: 18px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: inline-block;
+    border-bottom: 1px solid #fff;
+}
+.Box .EachBox:nth-child(odd) .MainHeading{
+	border-bottom: 1px solid #ccc;
+}
+.Box .EachBox .MainHeading:hover{
+	border-bottom: 1px solid #012;
+}
+.AllMatchView{
+    display: block;
+}
+.EachMatchView{
+    display: none;
+}
+.Box .teamBox{
+    margin-bottom: 40px;
+}
+.Box .scoreBoard .statusOfMatch{
+    padding: 10px;
+    font-weight: 600;
+    font-size: 17px;
+}
+.Box .scoreBoard table{
+    width: 100%;
+    border: 1px solid #000;
+}
+.Box .matchTitle{
+    background-color: #c3c388;
+    padding: 10px; 
+}
+.Box .scoreBoard .batsman{
+    margin: 10px 0px;
+}
+.Box .scoreBoard .bowler{
+    margin: 10px 0px;   
+}
+.Box .scoreBoard table tr{
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+}
+.Box .scoreBoard table tr th{
+    text-align: left;
+    padding: 5px 10px;
+}
+.Box .scoreBoard table tr:nth-child(even){
+    background-color: #ccffff;
+}
+.Box .scoreBoard table tr td{
+    padding: 10px;
+}
