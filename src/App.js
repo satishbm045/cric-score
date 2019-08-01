@@ -14,7 +14,8 @@ class App extends React.Component{
 			apiCall : {
 				isSuccess: false,
 				data: [],
-				faliureMessage: ''
+				faliureMessage: '',
+                gitcheck: []
 			}
 		}
 	}
