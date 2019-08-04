@@ -9,10 +9,25 @@ class UpcomingMatches extends React.Component{
             UpcomingMatchesList : []
         }
     }
-    
+    componentDidMount = () =>{
+        // if(localStorage.getItem("selectedMatchFromHome") != null){
+        //     this.SelectedMatch(JSON.parse(localStorage.selectedMatchFromHome));
+        //     localStorage.removeItem('selectedMatchFromHome');
+        // }
+        document.querySelectorAll("#menu_items")[0].childNodes.forEach((e,i)=>{
+            e.classList.remove( "active" );
+            if(e.id.toLowerCase() == window.location.pathname.split("/").pop().toLocaleLowerCase()){
+                console.log(e);
+                e.classList.add( "active" );
+            }
+        })
+    }
     render(){
         console.log(this.props.AllMatch);
-        
+        function calcDate(date){
+            var d = new Date(date);
+            return d;
+        }
         return(
             <>
                 { !this.props.AllMatch.isSuccess && <div className="Box Loading">Loading</div> }
@@ -27,9 +42,11 @@ class UpcomingMatches extends React.Component{
                                                 {e.series.name}
                                             </div>
                                             <div className="TeamName">
-                                            {e.awayTeam.shortName+' Vs '+e.homeTeam.shortName}
+                                            {e.awayTeam.shortName+' Vs '+e.homeTeam.shortName }
                                             </div>
-                                            {' Start Date: '+e.startDateTime}
+                                            {' Start Date: '+ calcDate(e.startDateTime) }
+                                            <br/>  
+                                            {'Venue: '+ e.venue.name}
                                         </div>
                                     )
                                 }

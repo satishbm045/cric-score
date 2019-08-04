@@ -36,7 +36,7 @@
 .AllMatchView{
     display: block;
 }
-.EachMatchView{
+#EachMatchView{
     display: none;
 }
 .Box .teamBox{
@@ -49,17 +49,20 @@
 }
 .Box .scoreBoard table{
     width: 100%;
+    overflow: auto;
     border: 1px solid #000;
 }
 .Box .matchTitle{
     background-color: #c3c388;
-    padding: 10px; 
+    padding: 10px;
 }
 .Box .scoreBoard .batsman{
     margin: 10px 0px;
+    overflow: auto;
 }
 .Box .scoreBoard .bowler{
-    margin: 10px 0px;   
+    margin: 10px 0px;
+    overflow: auto;
 }
 .Box .scoreBoard table tr{
     border-bottom: 1px solid #000;
@@ -74,4 +77,28 @@
 }
 .Box .scoreBoard table tr td{
     padding: 10px;
+}
+
+@media(max-width: 767px) {
+    .Box{
+        width: 100%;
+        margin: 0 auto;
+        height: 100%;
+    }
+    .Box .EachBox{
+        padding: 20px 15px;
+        line-height: 24px;
+        font-size: 14px;
+    }
+    .Box .EachBox .MainHeading{
+        font-size: 16px;
+        line-height: 28px;
+    }
+    .Box .scoreBoard table tr th{
+        white-space: nowrap;
+        text-align: center;
+    }
+    .Box .scoreBoard table tr td{
+        white-space: nowrap;
+    }
 }

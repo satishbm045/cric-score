@@ -1,6 +1,7 @@
 import React from 'react';
 import '../LiveMatches/LiveMatches.css';
 import axios from 'axios';
+import FullScoreBoard from '../Common/FullScoreBoard';
 
 class OldMatches extends React.Component{
     constructor(props){
@@ -15,6 +16,19 @@ class OldMatches extends React.Component{
             ,SelectedSeriesId: ''
             ,SelectedMatchStatus: ''
         }
+    }
+    componentDidMount = () =>{
+        if(localStorage.getItem("selectedMatchFromHome") != null){
+            this.SelectedMatch(JSON.parse(localStorage.selectedMatchFromHome));
+            localStorage.removeItem('selectedMatchFromHome');
+        }
+        document.querySelectorAll("#menu_items")[0].childNodes.forEach((e,i)=>{
+            e.classList.remove( "active" );
+            if(e.id.toLowerCase() == window.location.pathname.split("/").pop().toLocaleLowerCase()){
+                console.log(e);
+                e.classList.add( "active" );
+            }
+        })
     }
     SelectedMatch = (match) =>{
         var self = this;
@@ -97,86 +111,7 @@ class OldMatches extends React.Component{
 
                                 <div className="scoreBoard">
                                     <div className="statusOfMatch">{this.state.SelectedMatchStatus}</div>
-                                {   this.state.SelectedMatchesDetail.data.fullScorecard != undefined &&
-                                    this.state.SelectedMatchesDetail.data.fullScorecard.innings.map((eachInnings,index)=>{
-                                        return(
-                                            <div className="teamBox" key={index}>
-                                                <div className="matchTitle">
-                                                    <div style={{float:'left'}}>{eachInnings.team.shortName}</div>
-                                                    <div style={{float:'right'}}>{eachInnings.run}-{eachInnings.wicket} ({eachInnings.over})</div>
-                                                    <div style={{clear:'both'}}></div>
-                                                </div>
-                                                <div className="batsman">
-                                                    <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>Batsman</th>
-                                                            <th></th>
-                                                            <th>Runs</th>
-                                                            <th>Balls</th>
-                                                            <th>4s</th>
-                                                            <th>6s</th>
-                                                            <th>SR</th>
-                                                            <th>FOW</th>
-                                                        </tr>
-                                                        {
-                                                            eachInnings.batsmen.map((e,i)=>{
-                                                                if(e.balls > 0){
-                                                                    return (
-                                                                        <tr key={e.id}>
-                                                                            <td>{e.name}</td>
-                                                                            <td style={{fontSize:'12px'}}>{e.howOut}</td>  
-                                                                            <td>{e.runs}</td>
-                                                                            <td>{e.balls}</td>
-                                                                            <td>{e.fours}</td>
-                                                                            <td>{e.sixes}</td>
-                                                                            <td>{e.strikeRate}</td>
-                                                                            <td>{e.fallOfWicket}</td>
-                                                                        </tr>
-                                                                    )
-                                                                }
-                                                            })                                                
-                                                        }
-                                                    </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div className="bowler">
-                                                    <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>Bowler</th>
-                                                            <th>O</th>
-                                                            <th>R</th>
-                                                            <th>W</th>
-                                                            <th>M</th>
-                                                            <th>WD</th>
-                                                            <th>NB</th>
-                                                            <th>E</th>
-                                                        </tr>
-                                                        {
-                                                            eachInnings.bowlers.map((e,i)=>{
-                                                                return (
-                                                                    <tr key={e.id} id={e.id}>
-                                                                        <td>{e.name}</td>
-                                                                        <td>{e.overs}</td>  
-                                                                        <td>{e.runsConceded}</td>
-                                                                        <td>{e.wickets}</td>
-                                                                        <td>{e.maidens}</td>
-                                                                        <td>{e.wides}</td>
-                                                                        <td>{e.noBalls}</td>
-                                                                        <td>{e.economy}</td>  
-                                                                    </tr>
-                                                                )
-                                                            })                                                
-                                                        }
-                                                    </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
+                                    <FullScoreBoard Match = {this.state.SelectedMatchesDetail}/>                                
                                 </div>
                             }
                         </div>

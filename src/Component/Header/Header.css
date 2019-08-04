@@ -1,52 +1,248 @@
+/*Header starts here*/
+
 .header {
     position: fixed;
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 60px;
-    padding: 0px 30px;
-    z-index: 9999;
+    z-index: 1;
     background: #009270;
-    -webkit-box-shadow: 0px 0px 10px rgba(18, 18, 19, 0.21);
-    -moz-box-shadow: 0px 0px 10px rgba(18, 18, 19, 0.21);
+    height: 70px;
+    box-sizing: border-box;
     box-shadow: 0px 0px 10px rgba(18, 18, 19, 0.21);
+    z-index: 2;
 }
-.header .logo {
-    text-align: left;
+
+.header .logo{
+    width: 70px;
     float: left;
+    position: absolute;
+    left: 5px;
+    cursor: pointer;
 }
 .header .logo img{
-	width: 60px;
+    width: 100%;
 }
 .header .menu-container {
     width: 100%;
-    height: 100%;
+    display: flex;
 }
 .header .menu-container .menu-items {
-    float: right;
-    margin: 22px;
+    width: 90%;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 .header .menu-container .menu-items li {
     list-style-type: none;
     float: left;
-    text-align: center;
     font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: #fff;
-    position: relative;
-    cursor: pointer;
-}
-.header .menu-container .menu-items li:hover, .header .menu-container .menu-items li.active{
-	border-bottom: 1px solid #fff;
+    line-height: 19px;
 }
 .header .menu-container .menu-items li + li {
-    margin-left: 36px;
+    margin-left: 35px;
+}
+.header .menu-container .menu-items li {
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+    text-decoration: none;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+.header .menu-container .menu-items li.active {
+    background: #fff;
+    color: #009270;
+}
+.header .menu-container .menu-items li:hover{
+    background: #fff;
+    color: #009270;
+}
+.header .right-text {
+    display: inline-block;
+    float: right;
+    margin-top: 19px;
+}
+.header .right-text .parlour-btn {
+    float: right;
+    margin-top: 0px;
+    list-style-type: none;
+}
+.header .right-text .parlour-btn a {
+    background: #FDCF50;
+    color: #143f91;
+    padding: 8px 15px 8px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.header .right-text .parlour-btn a:hover {
+    background: #00408d;
+    text-decoration: none;
+    color: #fff;
+}
+.mobile-menu{
+    display: none;
 }
 
+/*Header ends here*/
 @media(max-width: 767px) {
-
-}
+    /*Header starts here*/
+     
+     
+     .mobile-menu {
+         display: block;
+     }
+     .header {
+         padding: 0px 10px;
+         width: 100%;
+         height: auto;
+     }
+     .header .logo svg {
+         width: 80px;
+     }
+     .header .mobile-menu svg {
+         position: absolute;
+         top: 10px;
+         right: 15px;
+         z-index: 1;
+         cursor: pointer;
+         background: #009270;
+         border-radius: 50%;
+         padding: 3px 8px;
+         box-sizing: border-box;
+         height: 52px;
+         width: 52px;
+     }
+     .header .mobile-menu.menu-opened svg {
+         /*right: 15px;*/
+     }
+     .header .mobile-menu svg path {
+         stroke: #fff;
+         -webkit-transition: all 0.5s ease;
+         -moz-transition: all 0.5s ease;
+         -ms-transition: all 0.5s ease;
+         -o-transition: all 0.5s ease;
+         transition: all 0.5s ease;
+     }
+     .header .mobile-menu svg path + path {
+         margin-top: 3px;
+     }
+     .header .logo img {
+         margin-top: 0px;
+         left: 30%;
+         top: 10%;
+         width: 100px;
+     }
+     .header .menu-container {
+         opacity: 0;
+         position: fixed;
+         top: 0px;
+         right: 0px;
+         width: 100%;
+         border: none;
+         height: 100%;
+         overflow-y: auto;
+         background: #fff;
+         text-align: left;
+         margin: 0px;
+         padding: 0px 0px;
+         box-sizing: border-box;
+         pointer-events: none;
+     }
+     .header .menu-container .menu-items {
+         padding-left: 0;
+         margin-top: 180px;
+         display: table;
+     }
+     .header .menu-container.menu-opened {
+         pointer-events: visible;
+            /* z-index: 999;*/
+     }
+     .header .menu-container .menu-items li {
+         float: none;
+         color: #000;
+         display: flex;
+         justify-content: center;
+     }
+     .header .menu-container .menu-items {
+         
+     }
+     .header .menu-container .menu-items li + li {
+         margin: 18px 0px 0px 0px;
+     }
+     .header .menu-container .menu-items li a {
+         font-size: 16px;
+         color: #00408d;
+         padding-bottom: 10px;
+         display: block;
+         text-align: center;
+     }
+     .header .menu-container .menu-items li .yellow {
+         padding: 12px 15px 10px;
+         box-sizing: border-box;
+     }
+     .header .menu-container .menu-items img {
+         width: 140px;
+     }
+     .header .right-text {
+         float: none;
+         display: table;
+         margin: 0px auto;
+         margin-top: 0px;
+     }
+     .header .menu-container .menu-items li.mob-logo.active a{
+         background: none;
+     }
+     .header .menu-container .menu-items li.mob-logo a:hover{
+         background: none;
+     }
+     .header .menu-container .socail-icons {
+         display: table;
+         margin: 0px auto;
+     }
+     .header .menu-container .socail-icons ul li {
+         float: left;
+         list-style-type: none;
+     }
+     .header .menu-container .socail-icons ul li + li {
+         margin-left: 30px;
+     }
+     .header .menu-container .socail-icons ul li a {
+         color: #27398F;
+         font-size: 14px;
+     }
+     .header .menu-container .socail-icons ul li a:hover {
+         color: #F9D618;
+     }
+     .header .menu-container .socail-icons ul li a .fa {
+         font-size: 25px;
+     }
+     .open {
+         opacity: 1 !important;
+     }
+     .close {
+         opacity: 0 !important;
+     }
+     .header .logo{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        top: 10%;
+     }
+     /*Header ends here*/
+ }
+ 
 
 @media (min-width: 768px) and (max-width: 991px) {
 

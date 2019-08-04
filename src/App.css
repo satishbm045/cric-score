@@ -27,6 +27,12 @@
 .App-link {
   color: #61dafb;
 }
+.btn.back-btn{
+  display: inline-block;
+  padding: 10px;
+  background-color: #ccffff;
+  cursor: pointer;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -40,4 +46,10 @@
 .App .page-start{
   margin-top: 60px;
   padding: 60px 40px;
+}
+@media(max-width: 767px) {
+  .App .page-start {
+    margin-top: 50px;
+    padding: 20px;
+  }
 }

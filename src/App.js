@@ -3,6 +3,7 @@ import Header from './Component/Header/Header';
 import LiveMatches from './Component/LiveMatches/LiveMatches';
 import UpcomingMatches from './Component/UpcomingMatches/UpcomingMatches';
 import OldMatches from './Component/OldMatches/OldMatches';
+import Matches from './Component/Matches/Matches';
 import {BrowserRouter, Route,Link, withRouter} from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
@@ -14,15 +15,14 @@ class App extends React.Component{
 			apiCall : {
 				isSuccess: false,
 				data: [],
-				faliureMessage: '',
-                gitcheck: []
+				faliureMessage: ''
 			}
 		}
 	}
 	componentDidMount =() =>{
 		var self = this;
         axios({
-            url: "https://dev132-cricket-live-scores-v1.p.rapidapi.com/matches.php?completedlimit=5&inprogresslimit=5&upcomingLimit=5",
+            url: "https://dev132-cricket-live-scores-v1.p.rapidapi.com/matches.php?completedlimit=10&inprogresslimit=10&upcomingLimit=10",
             method: 'get',
             headers: {
                 "X-RapidAPI-Host" : "dev132-cricket-live-scores-v1.p.rapidapi.com"
@@ -49,34 +49,22 @@ class App extends React.Component{
         })
     }
 	render(){
+		function yourHandler(){
+			console.log(window.location.href);
+		}
   		return (
-    		<BrowserRouter>
+    		<BrowserRouter >
       			<div className="App">
         			<Header />
                     <div className="page-start">
             			{ !this.state.apiCall.isSuccess && <Route path='/' exact render = {()=> <div>{this.state.apiCall.faliureMessage}</div>} />}
             			{ this.state.apiCall.isSuccess && 
-                            <Route path='/' exact render = {() => 
-                                {this.state.apiCall.data.map((e,i) =>{
-                                    return (
-                                            <div key={e.id} className="EachBox" >
-                                                <div className="MainHeading">
-                                                    {e.series.name}
-                                                </div>
-                                                <div className="TeamName">
-                                                    {e.awayTeam.shortName+' Vs '+e.homeTeam.shortName}
-                                                </div>
-                                                {e.matchSummaryText}
-                                            </div>
-                                        )
-                                    })
-                                }
-
-                            }/>
+                            <Route path='/' exact render = {() => <Matches AllMatch = {this.state.apiCall} /> }/>
                         }
             			<Route path='/live' exact render = {() => <LiveMatches AllMatch = {this.state.apiCall} />}/>
             			<Route path='/Upcoming' exact render ={()=> <UpcomingMatches AllMatch = {this.state.apiCall} />} />
                         <Route path='/old' exact render = {()=> <OldMatches AllMatch = {this.state.apiCall} />} />
+                        <Route path='/about' exact render = {()=> 'Under development....    by Satish'} />
                     </div>
       			</div>
     		</BrowserRouter>
