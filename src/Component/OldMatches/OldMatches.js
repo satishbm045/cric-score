@@ -1,6 +1,7 @@
 import React from 'react';
 import '../LiveMatches/LiveMatches.css';
 import axios from 'axios';
+import loadingLogo from '../../img/loading.gif';
 import FullScoreBoard from '../Common/FullScoreBoard';
 
 class OldMatches extends React.Component{
@@ -25,7 +26,6 @@ class OldMatches extends React.Component{
         document.querySelectorAll("#menu_items")[0].childNodes.forEach((e,i)=>{
             e.classList.remove( "active" );
             if(e.id.toLowerCase() == window.location.pathname.split("/").pop().toLocaleLowerCase()){
-                console.log(e);
                 e.classList.add( "active" );
             }
         })
@@ -76,7 +76,14 @@ class OldMatches extends React.Component{
         return(
             <>
                 <div id="AllMatchView">
-                    { !this.props.AllMatch.isSuccess && <div className="Box Loading">Loading</div> }
+                    { !this.props.AllMatch.isSuccess && 
+                        <div className="Box Loading">
+                            { !this.props.AllMatch.isSuccess && this.props.AllMatch.faliureMessage != 'Loading' && 
+                                <>{this.props.AllMatch.faliureMessage}</>
+                            }
+                            <img src={loadingLogo} alt="loading logo"/>
+                        </div>
+                    }
                     { this.props.AllMatch.isSuccess && 
                         <div className="Box">
                             {
@@ -103,15 +110,31 @@ class OldMatches extends React.Component{
                 <div id="EachMatchView">
                     <div className="btn back-btn" onClick={this.goBackToMacthes}>Back</div>
                     { !this.state.SelectedMatchesDetail.isSuccess && 
-                        <div className="Box Loading">{this.state.SelectedMatchesDetail.message}</div>
+                        <div className="Box Loading">
+                            { !this.state.SelectedMatchesDetail.isSuccess && this.state.SelectedMatchesDetail.message != 'Loading' && 
+                                <>{this.state.SelectedMatchesDetail.message}</>
+                            }
+                            <img src={loadingLogo} alt="loading logo"/>
+                        </div>
                     }
                     { this.state.SelectedMatchesDetail.isSuccess && 
                         <div className="Box">
                             {   
-
+                                
                                 <div className="scoreBoard">
-                                    <div className="statusOfMatch">{this.state.SelectedMatchStatus}</div>
-                                    <FullScoreBoard Match = {this.state.SelectedMatchesDetail}/>                                
+                                    <div className="matchHeading">
+                                        <div>{this.state.SelectedMatchesDetail.data.meta.series.name}</div>
+                                    </div>
+                                    <div>{this.state.SelectedMatchStatus}</div>
+                                    <FullScoreBoard Match = {this.state.SelectedMatchesDetail}/>
+                                    <div className="moreInformation">
+                                        More Information:
+                                        <ul>
+                                            <li>Man Of the Match: <span className="highlightText">{this.state.SelectedMatchesDetail.data.fullScorecardAwards.manOfTheMatchName}</span></li>
+                                            <li>Most Runs Award: <span className="highlightText">{this.state.SelectedMatchesDetail.data.fullScorecardAwards.mostRunsAward.name} - {this.state.SelectedMatchesDetail.data.fullScorecardAwards.mostRunsAward.runs}({this.state.SelectedMatchesDetail.data.fullScorecardAwards.mostRunsAward.balls})</span></li>
+                                            <li>Most Wickets Award: <span className="highlightText">{this.state.SelectedMatchesDetail.data.fullScorecardAwards.mostWicketsAward.name} - {this.state.SelectedMatchesDetail.data.fullScorecardAwards.mostWicketsAward.wickets} Wickets</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             }
                         </div>

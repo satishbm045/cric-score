@@ -1,6 +1,7 @@
 import React from 'react';
 import './LiveMatches.css';
 import axios from 'axios';
+import loadingLogo from '../../img/loading.gif';
 import FullScoreBoard from '../Common/FullScoreBoard';
 
 class LiveMatches extends React.Component{
@@ -11,16 +12,6 @@ class LiveMatches extends React.Component{
                 data: {}
                 ,isSuccess: false
                 ,message: 'Loading'
-            },
-            SelectedMatchesDetailLive : {
-                data: {}
-                ,isSuccess: false
-                ,message: 'Loading'
-            },
-            SelectedMatchesDetailComment : {
-                data: {}
-                ,isSuccess: false
-                ,message: 'Loading'
             }
             ,SelectedMatchId: ''
             ,SelectedSeriesId: ''
@@ -28,55 +19,20 @@ class LiveMatches extends React.Component{
     }
     componentDidMount = () =>{
         if(localStorage.getItem("selectedMatchFromHome") != null){
-            var result = JSON.parse(localStorage.selectedMatchFromHome)
-            this.SelectedMatch(result.series.id,result.id);
+            this.SelectedMatch(JSON.parse(localStorage.selectedMatchFromHome));
             localStorage.removeItem('selectedMatchFromHome');
         }
         document.querySelectorAll("#menu_items")[0].childNodes.forEach((e,i)=>{
             e.classList.remove( "active" );
             if(e.id.toLowerCase() == window.location.pathname.split("/").pop().toLocaleLowerCase()){
-                console.log(e);
                 e.classList.add( "active" );
             }
         })
-        var self = this;
-        setInterval(function(){ 
-            if(self.state.SelectedMatchId != ''){
-                self.SelectedMatch(self.state.SelectedSeriesId,self.state.SelectedMatchId)
-            } 
-        }, 350000);
     }
-    SelectedMatch = (seriesId,matchId) =>{
-        this.setState({
-            SelectedMatchId:matchId
-            ,SelectedSeriesId:seriesId
-        })
+    SelectedMatch = (match) =>{
         var self = this;
         axios({
-            url: 'https://dev132-cricket-live-scores-v1.p.rapidapi.com/matchdetail.php?seriesid='+seriesId+'&matchid='+matchId,
-            method: 'get',
-            headers: {
-                "X-RapidAPI-Host" : "dev132-cricket-live-scores-v1.p.rapidapi.com"
-                ,"X-RapidAPI-Key" : "6e9b6a0a65msh6bd761160573386p1ba0d1jsn67e1f7c9715e"
-            }
-        }).then(function (response) {
-            console.log(response.data);
-            self.setState({
-                SelectedMatchesDetailLive :{
-                    data:response.data,
-                    isSuccess: true 
-                }
-            })
-        }).catch(function(response){
-            self.setState({
-                SelectedMatchesDetailLive :{
-                    message:'There Some Connectivity Problem Please check your internet connection',
-                    isSuccess: false 
-                }
-            })
-        })
-        axios({
-            url: 'https://dev132-cricket-live-scores-v1.p.rapidapi.com/scorecards.php?seriesid='+seriesId+'&matchid='+matchId,
+            url: 'https://dev132-cricket-live-scores-v1.p.rapidapi.com/scorecards.php?seriesid='+match.series.id+'&matchid='+match.id,
             method: 'get',
             headers: {
                 "X-RapidAPI-Host" : "dev132-cricket-live-scores-v1.p.rapidapi.com"
@@ -93,29 +49,6 @@ class LiveMatches extends React.Component{
         }).catch(function(response){
             self.setState({
                 SelectedMatchesDetail :{
-                    message:'There Some Connectivity Problem Please check your internet connection',
-                    isSuccess: false 
-                }
-            })
-        })
-        axios({
-            url: 'https://dev132-cricket-live-scores-v1.p.rapidapi.com/comments.php?seriesid='+seriesId+'&matchid='+matchId,
-            method: 'get',
-            headers: {
-                "X-RapidAPI-Host" : "dev132-cricket-live-scores-v1.p.rapidapi.com"
-                ,"X-RapidAPI-Key" : "6e9b6a0a65msh6bd761160573386p1ba0d1jsn67e1f7c9715e"
-            }
-        }).then(function (response) {
-            console.log(response.data);
-            self.setState({
-                SelectedMatchesDetailComment :{
-                    data:response.data,
-                    isSuccess: true 
-                }
-            })
-        }).catch(function(response){
-            self.setState({
-                SelectedMatchesDetailComment :{
                     message:'There Some Connectivity Problem Please check your internet connection',
                     isSuccess: false 
                 }
@@ -143,27 +76,35 @@ class LiveMatches extends React.Component{
         }
         return(
             <> 
-                <div id="AllMatchView"> 
-                    {this.props.AllMatch.isSuccess && !LiveMatchesExist && 
-                        <div>
-                            There is no Live Matches going
+                <div id="AllMatchView">                    
+                    { !this.props.AllMatch.isSuccess && 
+                        <div className="Box Loading">
+                            { !this.props.AllMatch.isSuccess && this.props.AllMatch.faliureMessage != 'Loading' && 
+                                <>{this.props.AllMatch.faliureMessage}</>
+                            }
+                            <img src={loadingLogo} alt="loading logo"/>
                         </div>
                     } 
+                    {this.props.AllMatch.isSuccess && !LiveMatchesExist && 
+                        <div className="Box Loading">
+                            There is no Live Matches going
+                        </div>
+                    }
                     {this.props.AllMatch.isSuccess && LiveMatchesExist &&
                         <div className="Box">
                             {this.props.AllMatch.data.map((e,i) =>{
                                 if(e.status == 'LIVE' || e.status == 'INPROGRESS'){
                                     return (
-                                            <div key={e.id} className="EachBox" >
-                                                <div className="MainHeading" onClick={()=>{this.SelectedMatch(e.series.id,e.id)}}>
-                                                    {e.series.name}
-                                                </div>
-                                                <div className="TeamName">
-                                                    {e.awayTeam.shortName+' Vs '+e.homeTeam.shortName}
-                                                </div>
-                                                {e.matchSummaryText}
+                                        <div key={e.id} className="EachBox" >
+                                            <div className="MainHeading" onClick={()=>{this.SelectedMatch(e)}}>
+                                                {e.series.name}
                                             </div>
-                                        )
+                                            <div className="TeamName">
+                                                {e.awayTeam.shortName+' Vs '+e.homeTeam.shortName}
+                                            </div>
+                                            {e.matchSummaryText}
+                                        </div>
+                                    )
                                 }
                             })}
                         </div>   
@@ -171,9 +112,13 @@ class LiveMatches extends React.Component{
                 </div>
                 <div id="EachMatchView">
                     <div className="btn back-btn" onClick={this.goBackToMacthes}>Back</div>
-                    
                     { !this.state.SelectedMatchesDetail.isSuccess && 
-                        <div className="Box Loading">{this.state.SelectedMatchesDetail.message}</div>
+                        <div className="Box Loading">
+                            { !this.state.SelectedMatchesDetail.isSuccess && this.state.SelectedMatchesDetail.message != 'Loading' && 
+                                <>{this.state.SelectedMatchesDetail.message}</>
+                            }
+                            <img src={loadingLogo} alt="loading logo"/>
+                        </div>
                     }
                     { this.state.SelectedMatchesDetail.isSuccess && 
                         <div className="Box">

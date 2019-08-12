@@ -4,6 +4,7 @@ import LiveMatches from './Component/LiveMatches/LiveMatches';
 import UpcomingMatches from './Component/UpcomingMatches/UpcomingMatches';
 import OldMatches from './Component/OldMatches/OldMatches';
 import Matches from './Component/Matches/Matches';
+import loadingLogo from './img/loading.gif';
 import {BrowserRouter, Route,Link, withRouter} from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
@@ -57,7 +58,17 @@ class App extends React.Component{
       			<div className="App">
         			<Header />
                     <div className="page-start">
-            			{ !this.state.apiCall.isSuccess && <Route path='/' exact render = {()=> <div>{this.state.apiCall.faliureMessage}</div>} />}
+						{ !this.state.apiCall.isSuccess && <Route path='/' exact render = {()=> <div>
+							{ !this.state.apiCall.isSuccess && 
+								<div className="Box Loading">
+									{ !this.state.apiCall.isSuccess && this.state.apiCall.faliureMessage != 'Loading' && 
+										<>{this.state.apiCall.faliureMessage}</>
+									}
+									<img src={loadingLogo} alt="loading logo"/>
+								</div>
+							}
+							</div>} />
+						}
             			{ this.state.apiCall.isSuccess && 
                             <Route path='/' exact render = {() => <Matches AllMatch = {this.state.apiCall} /> }/>
                         }

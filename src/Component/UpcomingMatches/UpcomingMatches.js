@@ -1,6 +1,7 @@
 import React from 'react';
 import '../LiveMatches/LiveMatches.css';
 import axios from 'axios';
+import loadingLogo from '../../img/loading.gif';
 
 class UpcomingMatches extends React.Component{
     constructor(props){

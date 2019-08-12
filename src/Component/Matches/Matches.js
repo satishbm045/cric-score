@@ -1,7 +1,6 @@
 import React from 'react';
 import '../LiveMatches/LiveMatches.css';
-import axios from 'axios';
-import {BrowserRouter, Route,Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 class Matches extends React.Component{
     constructor(props){
@@ -21,7 +20,6 @@ class Matches extends React.Component{
         document.querySelectorAll("#menu_items")[0].childNodes.forEach((e,i)=>{
             e.classList.remove( "active" );
             if(e.id.toLowerCase() == window.location.pathname.split("/").pop().toLocaleLowerCase()){
-                console.log(e);
                 e.classList.add( "active" );
             }
         })
@@ -45,7 +43,6 @@ class Matches extends React.Component{
         return(
             <>
                 <div id="AllMatchView">
-                    { !this.props.AllMatch.isSuccess && <div className="Box Loading">Loading</div> }
                     { this.props.AllMatch.isSuccess && 
                         <div className="Box">
                             {

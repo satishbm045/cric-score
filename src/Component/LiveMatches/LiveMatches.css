@@ -3,6 +3,10 @@
     margin: 0 auto;
     height: 100%;
 }
+.Box.Loading{
+    display: flex;
+    justify-content: center;
+}
 .Box .EachBox{
     border-top: 1px solid #012;
     border-right: 1px solid #012;
@@ -11,6 +15,10 @@
     line-height: 26px;
     font-size: 16px;
     border-radius: 10px;
+}
+.Box .highlightText{
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 .Box .EachBox:nth-child(odd){
     background:#ccc;
@@ -42,10 +50,10 @@
 .Box .teamBox{
     margin-bottom: 40px;
 }
-.Box .scoreBoard .statusOfMatch{
-    padding: 10px;
-    font-weight: 600;
-    font-size: 17px;
+.Box .scoreBoard .matchHeading{
+    padding: 10px 0px;
+    font-weight: 400;
+    font-size: 22px;
 }
 .Box .scoreBoard table{
     width: 100%;
@@ -100,5 +108,10 @@
     }
     .Box .scoreBoard table tr td{
         white-space: nowrap;
+    }
+    .Box .scoreBoard .matchHeading{
+        padding: 10px 0px;
+        font-weight: 400;
+        font-size: 18px;
     }
 }
