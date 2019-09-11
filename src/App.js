@@ -7,6 +7,7 @@ import Matches from './Component/Matches/Matches';
 import loadingLogo from './img/loading.gif';
 import {BrowserRouter, Route,Link, withRouter} from 'react-router-dom';
 import './App.css';
+import $ from 'jquery'
 import axios from 'axios';
 
 class App extends React.Component{
@@ -22,6 +23,23 @@ class App extends React.Component{
 	}
 	componentDidMount =() =>{
 		var self = this;
+        $.ajax({
+          url : "https://6cym66wz30.execute-api.ap-southeast-1.amazonaws.com/dev/search",
+          type : 'post',
+          dataType : 'json',
+          crossDomain: true,
+          "headers": {
+            "content-type": "application/json",
+            "x-api-key": "a1HNwmvKMsX9E5YF1uzv8tQFV2QYBjX61GatKNDf"
+          },
+          "data": JSON.stringify({"keyword"  :"sbi"})
+        }).done(function(data) {
+          console.log(JSON.parse(data));
+        }).fail(function(data) {
+          console.log(data);
+        }).always(function(data) {
+          console.log(data);
+        });
         axios({
             url: "https://dev132-cricket-live-scores-v1.p.rapidapi.com/matches.php?completedlimit=10&inprogresslimit=10&upcomingLimit=10",
             method: 'get',
