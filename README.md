@@ -1,6 +1,6 @@
 To run this application
 
-Download all the file and run a commond "npm install" in node for application path for dependency file.
+Download all the file and run a commond "npm install" in node.
 
 To run the application use "npm start"
 
