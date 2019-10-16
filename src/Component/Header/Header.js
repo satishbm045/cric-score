@@ -9,11 +9,18 @@ class Header extends React.Component{
     }
     menuChange = (para,e) =>{
         e.preventDefault();
+        this.checkBrowserStatus();
         e.target.parentElement.querySelectorAll( ".active" ).forEach( e =>
             e.classList.remove( "active" ) 
         );    
         e.target.classList.add( "active" );
         this.props.history.push('/'+para);
+    }
+    checkBrowserStatus(){
+        if(!navigator.onLine)
+        {
+            alert("Check your connection");
+        }
     }
     render(){
         $(document).ready(function () {
