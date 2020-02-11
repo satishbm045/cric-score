@@ -117,8 +117,10 @@ class LiveMatches extends React.Component{
                     { !this.state.SelectedMatchesDetail.isSuccess && 
                         <div className="Box Loading">
                             { !this.state.SelectedMatchesDetail.isSuccess && this.state.SelectedMatchesDetail.message != 'Loading' &&
-                                <>{this.state.matchStatusThing}<>
-                                <>{this.state.SelectedMatchesDetail.message}</>
+                                <>
+                                    <>{this.state.matchStatusThing}<>
+                                    <>{this.state.SelectedMatchesDetail.message}</>
+                                </>
                             }
                             <img src={loadingLogo} alt="loading logo"/>
                         </div>
