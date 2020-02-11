@@ -118,7 +118,7 @@ class LiveMatches extends React.Component{
                         <div className="Box Loading">
                             { !this.state.SelectedMatchesDetail.isSuccess && this.state.SelectedMatchesDetail.message != 'Loading' &&
                                 <>
-                                    <>{this.state.matchStatusThing}<>
+                                    <>{this.state.matchStatusThing}</>
                                     <>{this.state.SelectedMatchesDetail.message}</>
                                 </>
                             }
