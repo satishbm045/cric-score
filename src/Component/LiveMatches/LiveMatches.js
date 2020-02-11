@@ -12,6 +12,7 @@ class LiveMatches extends React.Component{
                 data: {}
                 ,isSuccess: false
                 ,message: 'Loading'
+                ,matchStatusThing: ""
             }
             ,SelectedMatchId: ''
             ,SelectedSeriesId: ''
@@ -43,7 +44,8 @@ class LiveMatches extends React.Component{
             self.setState({
                 SelectedMatchesDetail :{
                     data:response.data,
-                    isSuccess: true 
+                    isSuccess: true,
+                    matchStatusThing: match.matchSummaryText
                 }
             })
         }).catch(function(response){
@@ -114,7 +116,8 @@ class LiveMatches extends React.Component{
                     <div className="btn back-btn" onClick={this.goBackToMacthes}>Back</div>
                     { !this.state.SelectedMatchesDetail.isSuccess && 
                         <div className="Box Loading">
-                            { !this.state.SelectedMatchesDetail.isSuccess && this.state.SelectedMatchesDetail.message != 'Loading' && 
+                            { !this.state.SelectedMatchesDetail.isSuccess && this.state.SelectedMatchesDetail.message != 'Loading' &&
+                                <>{this.state.matchStatusThing}<>
                                 <>{this.state.SelectedMatchesDetail.message}</>
                             }
                             <img src={loadingLogo} alt="loading logo"/>
