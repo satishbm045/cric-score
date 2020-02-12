@@ -77,6 +77,8 @@ class App extends React.Component{
       			<div className="App">
         			<Header />
                     <div className="page-start">
+			
+              <Switch>
 						{ !this.state.apiCall.isSuccess && <Route path='/' exact render = {()=> <div>
 							{ !this.state.apiCall.isSuccess && 
 								<div className="Box Loading">
@@ -96,6 +98,8 @@ class App extends React.Component{
                         <Route path='/old' exact render = {()=> <OldMatches AllMatch = {this.state.apiCall} />} />
                         <Route path='/about' exact render = {()=> 'Under development....    by Satish'} />
 			<Route component={NotFound} />
+				
+              <Switch>
                     </div>
       			</div>
     		</BrowserRouter>
