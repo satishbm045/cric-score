@@ -6,7 +6,7 @@ import OldMatches from './Component/OldMatches/OldMatches';
 import Matches from './Component/Matches/Matches';
 import NotFound from './Component/NotFound';
 import loadingLogo from './img/loading.gif';
-import {BrowserRouter, Route,Link, withRouter} from 'react-router-dom';
+import {BrowserRouter,Switch, Route,Link, withRouter} from 'react-router-dom';
 import './App.css';
 import $ from 'jquery'
 import axios from 'axios';
