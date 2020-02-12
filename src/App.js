@@ -4,7 +4,7 @@ import LiveMatches from './Component/LiveMatches/LiveMatches';
 import UpcomingMatches from './Component/UpcomingMatches/UpcomingMatches';
 import OldMatches from './Component/OldMatches/OldMatches';
 import Matches from './Component/Matches/Matches';
-import NotFound from './Component/NotFound/NotFound';
+import NotFound from './Component/NotFound';
 import loadingLogo from './img/loading.gif';
 import {BrowserRouter, Route,Link, withRouter} from 'react-router-dom';
 import './App.css';
