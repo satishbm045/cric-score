@@ -4,6 +4,7 @@ import LiveMatches from './Component/LiveMatches/LiveMatches';
 import UpcomingMatches from './Component/UpcomingMatches/UpcomingMatches';
 import OldMatches from './Component/OldMatches/OldMatches';
 import Matches from './Component/Matches/Matches';
+import NotFound from './Component/NotFound/NotFound';
 import loadingLogo from './img/loading.gif';
 import {BrowserRouter, Route,Link, withRouter} from 'react-router-dom';
 import './App.css';
@@ -94,6 +95,7 @@ class App extends React.Component{
             			<Route path='/Upcoming' exact render ={()=> <UpcomingMatches AllMatch = {this.state.apiCall} />} />
                         <Route path='/old' exact render = {()=> <OldMatches AllMatch = {this.state.apiCall} />} />
                         <Route path='/about' exact render = {()=> 'Under development....    by Satish'} />
+			<Route component={NotFound} />
                     </div>
       			</div>
     		</BrowserRouter>
