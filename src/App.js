@@ -99,7 +99,7 @@ class App extends React.Component{
                         <Route path='/about' exact render = {()=> 'Under development....    by Satish'} />
 			<Route component={NotFound} />
 				
-              <Switch>
+              </Switch>
                     </div>
       			</div>
     		</BrowserRouter>
