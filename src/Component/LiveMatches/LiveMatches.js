@@ -61,6 +61,11 @@ class LiveMatches extends React.Component{
         console.log(this.state.SelectedMatchesDetail);
     }
     goBackToMacthes =()=>{
+        this.setState({
+            SelectedMatchesDetail : {
+                isSuccess: false
+            }
+        })
         document.getElementById('AllMatchView').style.display = 'block';
         document.getElementById('EachMatchView').style.display = 'none';
     }
