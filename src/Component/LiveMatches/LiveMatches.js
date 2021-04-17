@@ -14,6 +14,11 @@ class LiveMatches extends React.Component{
                 ,message: 'Loading'
                 ,matchStatusThing: ""
             }
+            ,commentary: {
+                data: {}
+                ,isSuccess: false
+                ,message: 'Loading'
+            }
             ,SelectedMatchId: ''
             ,SelectedSeriesId: ''
         }
@@ -56,6 +61,23 @@ class LiveMatches extends React.Component{
                 }
             })
         })
+        axios({
+            url: 'https://dev132-cricket-live-scores-v1.p.rapidapi.com/comments.php?seriesid='+match.series.id+'&matchid='+match.id,
+            method: 'get',
+            headers: {
+                "X-RapidAPI-Host" : "dev132-cricket-live-scores-v1.p.rapidapi.com"
+                ,"X-RapidAPI-Key" : "6e9b6a0a65msh6bd761160573386p1ba0d1jsn67e1f7c9715e"
+            }
+        }).then(function (response) {
+            console.log(response.data);
+            self.setState({
+                commentary :response.data
+            })
+        }).catch(function(response){
+            self.setState({
+                commentary:'There Some Connectivity Problem Please check your internet connection'
+            })
+        })
         document.getElementById('AllMatchView').style.display = 'none';
         document.getElementById('EachMatchView').style.display = 'block';
         console.log(this.state.SelectedMatchesDetail);
@@ -83,7 +105,7 @@ class LiveMatches extends React.Component{
         }
         return(
             <> 
-                <div id="AllMatchView">                    
+                <div id="AllMatchView">
                     { !this.props.AllMatch.isSuccess && 
                         <div className="Box Loading">
                             { !this.props.AllMatch.isSuccess && this.props.AllMatch.faliureMessage != 'Loading' && 
@@ -133,7 +155,7 @@ class LiveMatches extends React.Component{
 
                                 <div className="scoreBoard">
                                     <div className="statusOfMatch">{this.state.matchStatusThing}</div>
-                                    <FullScoreBoard Match = {this.state.SelectedMatchesDetail}/> 
+                                    <FullScoreBoard Match = {this.state.SelectedMatchesDetail} matchCommentryData={this.state.commentary}/> 
                                 </div>
                             }
                         </div>
