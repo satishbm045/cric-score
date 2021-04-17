@@ -84,6 +84,41 @@ const FullScoreBoard = (props) =>{
                     )
                 })
             }
+            
+            <div className="matchTitle">
+                Commentary
+            </div>
+            {
+                props.matchCommentryData.commentary &&
+                props.matchCommentryData.commentary.innings.slice(0).reverse().map((eachInningsData,index)=>{
+                    if(index < 1){
+                        return(
+                            <div key={index}>
+                                <ul className="commentryList">
+                                {eachInningsData.overs.map((ballData,index)=> {
+                                    if(index < 3){
+                                    return(
+                                        ballData.balls.map((eachBall)=>{
+                                            return(
+                                                eachBall.comments.map((data,index)=>{
+                                                    return(
+                                                        <li className="eachComment" key={index}>
+                                                            {data.text}
+                                                        </li>
+                                                    )
+                                                })
+                                            )
+                                        })
+                                    )
+                                    }
+                                })}
+                                </ul>
+                            </div>
+                        )
+                    }
+                })
+            }
+            {!props.matchCommentryData.commentary && "loading"}
         </>
     )
 }
